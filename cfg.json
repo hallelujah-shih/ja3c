@@ -1,5 +1,5 @@
 {
   "pin_base_path": "/sys/fs/bpf/cap_pkg",
   "dev_name": "eth0",
-  "ebpf_file": "xdp_filter_tls_hello.o"
+  "ebpf_file": "bpf/xdp_filter_tls_hello.o"
 }
