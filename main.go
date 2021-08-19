@@ -166,11 +166,11 @@ func attach() {
 		return
 	}
 
-	// for _, ms := range collSpec.Maps {
-	// 	if ms.Type == ebpf.PerfEventArray {
-	// 		ms.MaxEntries = 128
-	// 	}
-	// }
+	for _, ms := range collSpec.Maps {
+		if ms.Type == ebpf.PerfEventArray {
+			ms.MaxEntries = PossibleCPUs()
+		}
+	}
 
 	bpfColl, err := ebpf.NewCollectionWithOptions(collSpec, ebpf.CollectionOptions{
 		Programs: ebpf.ProgramOptions{
