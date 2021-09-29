@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"os"
+	"os/exec"
 	"path/filepath"
 
 	"github.com/dreadl0ck/tlsx"
@@ -231,7 +232,6 @@ func detach() {
 }
 
 func main() {
-	UnlimitLockedMemory()
 	app := &cli.App{
 		Name:        "xdp sample test",
 		HelpName:    "xdp sample test",
@@ -253,6 +253,11 @@ func main() {
 						return err
 					}
 
+					UnlimitLockedMemory()
+					cmd := exec.Command("sh", "-c", "/bin/mountpoint -q /sys/fs/bpf || /bin/mount bpffs /sys/fs/bpf -t bpf")
+					if _, err := cmd.CombinedOutput(); err != nil {
+						return fmt.Errorf("excute mount bpffs error: %v", err)
+					}
 					attach()
 					return nil
 				},
